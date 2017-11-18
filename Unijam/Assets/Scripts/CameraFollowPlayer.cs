@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class CameraFollowPlayer : MonoBehaviour {
 
-    public GameObject player;
+    private GameObject player;
     float mv;
     public float camspeed;
 	// Use this for initialization
 	void Start () {
         mv = 0;
         camspeed = 5;
-        //player = GameObject.Find("Player");
-	}
+        Engine eng =Object.FindObjectOfType<Engine>();
+        player = eng.gameObject;
+
+    }
 
     //void MoveCamera()
     //{
