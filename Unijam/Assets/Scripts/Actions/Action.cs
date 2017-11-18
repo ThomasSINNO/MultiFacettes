@@ -60,6 +60,7 @@ public class Action : MonoBehaviour {
     {
         objectif = obstacle;
         hasObjectif = true;
+        this.transform.parent = null;
     }
 
     public void Update()
@@ -81,15 +82,16 @@ public class Action : MonoBehaviour {
             }
             else  // The Soul touched the obstacle
             {
-                //objectif.gameObject.SetActive(false);
                 objectif.GetComponent<Obstacle>().Animate();
                 Destroy(objectif.GetComponent<PolygonCollider2D>());
-                //objectif.GetComponent<PolygonCollider2D>().enabled = false;
-                Debug.Log("collider destroyed");
+
+                /*
                 FireFlies script = GetComponentInParent<FireFlies>();
                 script.DestroyCurrentFireFlies();
-                //this.gameObject.SetActive(false);
+                */
+                Destroy(this.gameObject);
                 objectif = null;
+                
             }
         }
     }
