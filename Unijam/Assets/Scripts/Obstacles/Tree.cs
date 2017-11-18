@@ -47,4 +47,19 @@ public class Tree : Obstacle
         }
         return false;
     }
+
+    public override bool isActivable(Action.ActionType actionType)
+    {
+        if (state == State.Default)
+        {
+            switch (actionType)
+            {
+                case Action.ActionType.Cut:
+                    return true;
+                case Action.ActionType.Destroy:
+                    return true;
+            }
+        }
+        return false;
+    }
 }

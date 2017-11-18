@@ -41,7 +41,9 @@ public abstract class Obstacle : MonoBehaviour {
     }
 
     public abstract bool Activate(Action.ActionType actionType);
-    
+    public abstract bool isActivable(Action.ActionType actionType);
+
+
     protected void ChargeAnimation(AnimationClip animation)
     {
         Animator animatorHandler = GetComponent<Animator>();
