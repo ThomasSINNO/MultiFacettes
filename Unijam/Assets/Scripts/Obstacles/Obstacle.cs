@@ -43,16 +43,13 @@ public abstract class Obstacle : MonoBehaviour {
     public abstract bool Activate(Action.ActionType actionType);
     public abstract bool isActivable(Action.ActionType actionType);
 
+    public abstract void Animate();
 
-    protected void ChargeAnimation(AnimationClip animation)
+
+    public void ChargeAnimation(AnimationClip animation, string name)
     {
         Animator animatorHandler = GetComponent<Animator>();
-        animatorHandler.SetBool("onActivate", true);
-        /*
-        Animation animationHandler = GetComponent<Animation>();
-        animationHandler.AddClip(animation, animation.name);
-        animationHandler.Play();
-        */
+        animatorHandler.SetBool(name, true);
     }
 
     protected void Update()

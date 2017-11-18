@@ -10,6 +10,11 @@ public class Water : Obstacle
         type = Obstacle.ObstacleType.Water;
     }
 
+    public override void Animate()
+    {
+        //ChargeAnimation(onDestroyed, "isDestroyed");
+    }
+
     // Animations
     public AnimationClip onFroze;
 
@@ -22,7 +27,7 @@ public class Water : Obstacle
                 case Action.ActionType.Freeze:
                     state = State.Frozen;
                     colliderType = ColliderType.Liquid;
-                    ChargeAnimation(onFroze);
+                    //ChargeAnimation(onFroze);
                     return true;
                 case Action.ActionType.Move:
                     // doesn't affect the water

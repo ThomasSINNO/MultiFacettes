@@ -34,11 +34,23 @@ public class Action : MonoBehaviour {
             Obstacle obstacle = collider.gameObject.GetComponent<Obstacle>();
             if (obstacle)
             {
+                Debug.Log("found normal");
                 if (obstacle.isActivable(type))
                 {
                     return obstacle;
                 }
-                    
+            }
+        }
+        foreach (Collider2D collider in Physics2D.OverlapCircleAll(positionPlayer, actionRadius, 1<<LayerMask.NameToLayer("NoCollision")))
+        {
+            Obstacle obstacle = collider.gameObject.GetComponent<Obstacle>();
+            if (obstacle)
+            {
+                Debug.Log("found hidden");
+                if (obstacle.isActivable(type))
+                {
+                    return obstacle;
+                }
             }
         }
         return null;
@@ -67,9 +79,13 @@ public class Action : MonoBehaviour {
                 float signY = distance.y / Mathf.Abs(distance.y);
                 this.transform.position += new Vector3(signX * movement * percentX, signY * movement * (1 - percentX), 0);
             }
-            else
+            else  // The Soul touched the obstacle
             {
-                objectif.gameObject.SetActive(false);
+                //objectif.gameObject.SetActive(false);
+                objectif.GetComponent<Obstacle>().Animate();
+                Destroy(objectif.GetComponent<PolygonCollider2D>());
+                //objectif.GetComponent<PolygonCollider2D>().enabled = false;
+                Debug.Log("collider destroyed");
                 FireFlies script = GetComponentInParent<FireFlies>();
                 script.DestroyCurrentFireFlies();
                 //this.gameObject.SetActive(false);

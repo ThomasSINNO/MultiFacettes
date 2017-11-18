@@ -13,6 +13,11 @@ public class Wall : Obstacle
     // Animation
     public AnimationClip onDestroyed;
 
+    public override void Animate()
+    {
+        ChargeAnimation(onDestroyed, "isDestroyed");
+    }
+
     public override bool Activate(Action.ActionType actionType)
     {
         if (state == State.Default)
@@ -22,7 +27,7 @@ public class Wall : Obstacle
                 case Action.ActionType.Destroy:
                     state = State.Destroyed;
                     colliderType = ColliderType.None;
-                    ChargeAnimation(onDestroyed);
+                    //ChargeAnimation(onDestroyed);
                     this.gameObject.SetActive(false);
                     return true;
                 case Action.ActionType.Move:
