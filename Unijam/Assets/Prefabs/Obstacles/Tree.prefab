@@ -265,9 +265,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1249865489276170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9ac39c5f1404fe45a3615c0a3421c9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7aff152fa01e4194293a414b9577e781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colliderType: 0
   onCut: {fileID: 0}
   onDestroyed: {fileID: 0}
 --- !u!212 &212427891708044162
@@ -310,6 +311,8 @@ SpriteRenderer:
   m_Size: {x: 8, y: 8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!212 &212769864052460288
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -350,3 +353,5 @@ SpriteRenderer:
   m_Size: {x: 8, y: 8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
