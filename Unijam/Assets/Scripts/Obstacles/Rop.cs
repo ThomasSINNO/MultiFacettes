@@ -26,4 +26,16 @@ public class Rop : Obstacle
         }
         return false;
     }
+
+    public override bool isActivable(Action.ActionType actionType)
+    {
+        if (state == State.Default)
+        {
+            if (actionType == Action.ActionType.Cut || actionType == Action.ActionType.Shoot)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

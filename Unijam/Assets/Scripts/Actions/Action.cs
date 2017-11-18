@@ -12,31 +12,67 @@ public class Action : MonoBehaviour {
         Move,
         Freeze
     };
-
+    
+    public Obstacle objectif;
+    public bool hasObjectif;
+    [SerializeField] private float speed;
     [SerializeField] protected float actionRadius;
+    [SerializeField] protected float actionRadiusSoul;
     public ActionType type;
 
-    public bool Activate(Vector3 positionPlayer)
+    private void Start()
     {
-        bool somethingDestroy = false;
+        hasObjectif = false;
+        objectif = null;
+        speed = 1f;
+    }
+
+    public Obstacle Activate(Vector3 positionPlayer)
+    {
         foreach (Collider2D collider in Physics2D.OverlapCircleAll(positionPlayer, actionRadius))
         {
             Obstacle obstacle = collider.gameObject.GetComponent<Obstacle>();
             if (obstacle)
             {
-                if (obstacle.Activate(type))
+                if (obstacle.isActivable(type))
                 {
-                    somethingDestroy = true;
-                    Destroy(this);
-                    break;
+                    return obstacle;
                 }
                     
             }
         }
-        if (somethingDestroy)
+        return null;
+    }
+
+    public void setObjective(Obstacle obstacle)
+    {
+        objectif = obstacle;
+        hasObjectif = true;
+    }
+
+    public void Update()
+    {
+        if (objectif)
         {
-            Debug.Log("something destroyed !");
+            LucioleAnimation lucioleScript = GetComponent<LucioleAnimation>();
+            Vector3 globalPosition = GameObject.Find(this.name).transform.position;
+            Vector3 globalObjectif = GameObject.Find(objectif.name).transform.position;
+            Vector2 distance = new Vector2(globalObjectif.x - globalPosition.x,
+                                            globalObjectif.y - globalPosition.y);
+            if (distance.magnitude > 0.1f)
+            {
+                float movement = speed * Time.deltaTime;
+                float percentX = Mathf.Abs(distance.x) / distance.magnitude;
+                float signX = distance.x / Mathf.Abs(distance.x);
+                float signY = distance.y / Mathf.Abs(distance.y);
+                this.transform.position += new Vector3(signX * movement * percentX, signY * movement * (1 - percentX), 0);
+            }
+            else
+            {
+                objectif.gameObject.SetActive(false);
+                this.gameObject.SetActive(false);
+                objectif = null;
+            }
         }
-        return somethingDestroy;
     }
 }
