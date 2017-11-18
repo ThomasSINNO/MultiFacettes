@@ -34,7 +34,6 @@ public class Action : MonoBehaviour {
             Obstacle obstacle = collider.gameObject.GetComponent<Obstacle>();
             if (obstacle)
             {
-                Debug.Log("found normal");
                 if (obstacle.isActivable(type))
                 {
                     return obstacle;
@@ -46,7 +45,6 @@ public class Action : MonoBehaviour {
             Obstacle obstacle = collider.gameObject.GetComponent<Obstacle>();
             if (obstacle)
             {
-                Debug.Log("found hidden");
                 if (obstacle.isActivable(type))
                 {
                     return obstacle;
@@ -82,13 +80,21 @@ public class Action : MonoBehaviour {
             }
             else  // The Soul touched the obstacle
             {
-                objectif.GetComponent<Obstacle>().Animate();
-                Destroy(objectif.GetComponent<PolygonCollider2D>());
+                if (type == ActionType.Cut || type == ActionType.Cut)
+                {
+                    objectif.GetComponent<Obstacle>().Animate();
+                    Destroy(objectif.GetComponent<PolygonCollider2D>());
+                }
+                else if (type == ActionType.Freeze)
+                {
+                    objectif.Activate(ActionType.Freeze);
+                }
 
                 /*
                 FireFlies script = GetComponentInParent<FireFlies>();
                 script.DestroyCurrentFireFlies();
                 */
+
                 Destroy(this.gameObject);
                 objectif = null;
                 

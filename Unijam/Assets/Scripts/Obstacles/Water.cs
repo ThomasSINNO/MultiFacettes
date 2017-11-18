@@ -26,7 +26,9 @@ public class Water : Obstacle
             {
                 case Action.ActionType.Freeze:
                     state = State.Frozen;
-                    colliderType = ColliderType.Liquid;
+                    Debug.Log("frozen");
+                    //GetComponent<GameObject>().layer = LayerMask.NameToLayer("Default");
+                    this.gameObject.layer = 0;
                     //ChargeAnimation(onFroze);
                     return true;
                 case Action.ActionType.Move:
