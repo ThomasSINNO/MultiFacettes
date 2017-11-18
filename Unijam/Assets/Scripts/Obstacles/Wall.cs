@@ -23,6 +23,7 @@ public class Wall : Obstacle
                     state = State.Destroyed;
                     colliderType = ColliderType.None;
                     ChargeAnimation(onDestroyed);
+                    this.gameObject.SetActive(false);
                     return true;
                 case Action.ActionType.Move:
                     // The wall is not impacted by the player movement
