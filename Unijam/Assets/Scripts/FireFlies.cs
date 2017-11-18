@@ -6,7 +6,7 @@ public class FireFlies : MonoBehaviour {
 
     public int activeActionIndex;
     
-    [SerializeField]  private List<GameObject> Fireflies;
+    [SerializeField]  private List<GameObject> Fireflies;  // ignore the debug error
     public Vector3[] FirefliesPositions;
 
     private Action[] actionsTemp;
@@ -49,7 +49,6 @@ public class FireFlies : MonoBehaviour {
         Obstacle obstacle = actions[activeActionIndex].Activate(player.position);
         if (obstacle)
         {
-            Debug.Log("hi again");
             if (actions[activeActionIndex].type == Action.ActionType.Cut
                 || actions[activeActionIndex].type == Action.ActionType.Destroy
                 || actions[activeActionIndex].type == Action.ActionType.Freeze)
@@ -67,10 +66,15 @@ public class FireFlies : MonoBehaviour {
 
     public void DestroyCurrentFireFlies()
     {
+        DestroyFireFlies(activeActionIndex);
+    }
+
+    public void DestroyFireFlies(int index)
+    {
         //transform.GetChild(activeActionIndex).gameObject.SetActive(false);
-        Fireflies[activeActionIndex].gameObject.SetActive(false);
-        Fireflies.RemoveAt(activeActionIndex);
-        actions.RemoveAt(activeActionIndex);
+        Fireflies[index].gameObject.SetActive(false);
+        Fireflies.RemoveAt(index);
+        actions.RemoveAt(index);
         ChangeActive();
         TurnFireflies();
     }
