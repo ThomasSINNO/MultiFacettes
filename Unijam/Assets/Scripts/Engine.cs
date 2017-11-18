@@ -28,7 +28,7 @@ public class Engine : MonoBehaviour
     private bool collisionLeft = false;
     private bool collisionRight = false;
     private bool isAgainstAWall = false;
-    public int isJumping = 0;
+    public bool isJumping = false;
     private int lastWallJump = 0;   // 0 - No jump, 1 - Right wall jump, -1 - Left wall jump
 
     public ColliderPoint[] collisionPointsBottom;
@@ -92,28 +92,28 @@ public class Engine : MonoBehaviour
             lastWallJump = 1;
             speed.x -= wallJumpImpulse; // we add a small impulsion
         }
-        else if (isJumping <= 1)
+        else if (!isJumping)
         {
             speed.y = powerJump;
-            isJumping += 1;   // normal jump cost 1 point of isJumping
+            isJumping = true;   // normal jump cost 1 point of isJumping
         }
     }
 
-    // return the extra speed procured by the dash
-    public void Dash()
-    {
-        if (timeSinceLastDash > dashCoolDown)
-        {
-            if (speed.x < 0)
-            {
-                dashValue = - dashPower;
-            }
-            if (speed.x > 0)
-            {
-                dashValue = dashPower;
-            }
-        }
-    }
+    //// return the extra speed procured by the dash
+    //public void Dash()
+    //{
+    //    if (timeSinceLastDash > dashCoolDown)
+    //    {
+    //        if (speed.x < 0)
+    //        {
+    //            dashValue = - dashPower;
+    //        }
+    //        if (speed.x > 0)
+    //        {
+    //            dashValue = dashPower;
+    //        }
+    //    }
+    //}
 
     void CollisionTest()
     {
@@ -126,7 +126,7 @@ public class Engine : MonoBehaviour
                 case (Side.Left):
                     {
                         // update the wall jumps
-                        if (!collisionLeft && isJumping >= 1)
+                        if (!collisionLeft && isJumping)
                         {
                             collisionLeft = true;
                             collisionRight = false;
@@ -139,7 +139,7 @@ public class Engine : MonoBehaviour
                 case (Side.Right):
                     {
                         // update the wall jumps
-                        if (!collisionRight && isJumping >= 1)
+                        if (!collisionRight && isJumping)
                         {
                             collisionRight = true;
                             collisionLeft = false;
@@ -164,7 +164,7 @@ public class Engine : MonoBehaviour
             collisionLeft = false;
             lastWallJump = 0;
 
-            isJumping = 0;
+            isJumping = false;
             animator.SetBool("isJumping", false);
 
             speed.y = 0;
@@ -191,7 +191,7 @@ public class Engine : MonoBehaviour
     void Update()
     {
 
-        if (isJumping!=0) animator.SetBool("isJumping", true);
+        animator.SetBool("isJumping", isJumping);
         if (type ==Type.Player)
         {
             timeSinceLastDash += Time.deltaTime;
