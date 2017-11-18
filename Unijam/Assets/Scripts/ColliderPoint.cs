@@ -19,7 +19,7 @@ public class ColliderPoint : MonoBehaviour {
         {
             case (Side.Left):
                 {
-                    if (Physics2D.Raycast(transform.position, direction, Mathf.Max(- speed.x * Time.fixedDeltaTime, 0.1f, 1)))
+                    if (Physics2D.Raycast(transform.position, direction, Mathf.Max(- speed.x * Time.fixedDeltaTime, 0.1f), 1))
                     {
                         Debug.DrawRay(transform.position, direction, Color.blue);
                         return side;
@@ -27,7 +27,7 @@ public class ColliderPoint : MonoBehaviour {
                 } break;
             case (Side.Right):
                 {
-                    if (Physics2D.Raycast(transform.position, direction, Mathf.Max(speed.x * Time.fixedDeltaTime, 0.1f, 1)))
+                    if (Physics2D.Raycast(transform.position, direction, Mathf.Max(speed.x * Time.fixedDeltaTime, 0.1f), 1))
                     {
                         Debug.DrawRay(transform.position, direction * speed.x * Time.fixedDeltaTime, Color.blue);
                         return side;
@@ -36,7 +36,7 @@ public class ColliderPoint : MonoBehaviour {
                 break;
             case (Side.Top):
                 {
-                    if (Physics2D.Raycast(transform.position, direction, Mathf.Max(speed.y * Time.fixedDeltaTime, 0.1f, 1)))
+                    if (Physics2D.Raycast(transform.position, direction, Mathf.Max(speed.y * Time.fixedDeltaTime, 0.1f), 1))
                     {
                         Debug.DrawRay(transform.position, direction * speed.y * Time.fixedDeltaTime, Color.blue);
                         return side;
