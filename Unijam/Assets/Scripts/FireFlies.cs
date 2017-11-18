@@ -28,6 +28,7 @@ public class FireFlies : MonoBehaviour {
     void Update()
     {
         if (Input.GetButtonDown("Switch")) {
+            Debug.Log(Fireflies.Count);
             ChangeActive();
             TurnFireflies();
         }
@@ -59,7 +60,7 @@ public class FireFlies : MonoBehaviour {
         //transform.GetChild(activeActionIndex).gameObject.SetActive(false);
         Fireflies[activeActionIndex].gameObject.SetActive(false);
         Fireflies.RemoveAt(activeActionIndex);
-        if (activeActionIndex < Fireflies.Count)
+        if (activeActionIndex > 0)
         {
             ChangeActive();
             TurnFireflies();
@@ -69,8 +70,7 @@ public class FireFlies : MonoBehaviour {
     void ChangeActive()
     {
         activeActionIndex++;
-        
-        if (activeActionIndex == Fireflies.Count)
+        if (activeActionIndex >= Fireflies.Count)
         {
             activeActionIndex = 0;
         }
