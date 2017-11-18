@@ -1,5 +1,5 @@
 /[Ll]ibrary/*
-/[Tt]emp/*
+#/[Tt]emp/*
 /[Oo]bj/*
 /[Bb]uild/*
 /[Bb]uilds/*
@@ -16,8 +16,8 @@ ExportedObj/
 *.sln
 *.suo
 *.tmp
-#*.user
-#*.userprefs
+*.user
+*.userprefs
 *.pidb
 *.booproj
 *.svd
