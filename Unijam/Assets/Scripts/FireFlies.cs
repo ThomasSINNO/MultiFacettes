@@ -52,7 +52,7 @@ public class FireFlies : MonoBehaviour {
 
     void ThrowFireFly(Obstacle obstacle)
     {
-        actions[activeActionIndex].setObjective(obstacle);
+        actions[activeActionIndex].SetObjective(obstacle);
     }
 
     public void DestroyCurrentFireFlies()
