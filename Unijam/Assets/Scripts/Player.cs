@@ -12,12 +12,16 @@ public class Player : MonoBehaviour {
     
     private Engine engine;
 
+    public CheckPointManager checkPointManager;
+
     // Use this for initialization
     void Start () {
 
         engine = GetComponent<Engine>();
         engine.type = Engine.Type.Player;
         animator = GetComponent<Animator>();
+
+        checkPointManager = Object.FindObjectOfType<CheckPointManager>();
     }
 
     // Update is called once per frame
@@ -25,6 +29,10 @@ public class Player : MonoBehaviour {
         engine.speed.x = maxSpeed * Input.GetAxis("Move");
         Flip(engine.speed.x);
         animator.SetBool("isMoving", this.gameObject.GetComponent<Player>().isMoving);
+        if (this.transform.position.y < -10)
+        {
+            checkPointManager.Sacrifice(this.gameObject);
+        }
     }
 
     void FixedUpdate()
