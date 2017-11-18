@@ -24,10 +24,11 @@ public class Engine : MonoBehaviour
 
     public Type type;
 
+    private Animator animator;
     private bool collisionLeft = false;
     private bool collisionRight = false;
     private bool isAgainstAWall = false;
-    private int isJumping = 0;
+    public int isJumping = 0;
     private int lastWallJump = 0;   // 0 - No jump, 1 - Right wall jump, -1 - Left wall jump
 
     public ColliderPoint[] collisionPointsBottom;
@@ -35,6 +36,7 @@ public class Engine : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         if (transform.Find("Collision Bottom"))
         {
             collisionPointsBottom = transform.Find("Collision Bottom").GetComponentsInChildren<ColliderPoint>();
@@ -45,6 +47,15 @@ public class Engine : MonoBehaviour
         }
 
         timeSinceLastDash = dashCoolDown;
+    }
+
+    public void InvertColliders()
+    {
+        foreach (ColliderPoint collider in collisionPointsSides)
+        {
+            if (collider.side == Side.Right) collider.side = Side.Left;
+            else if (collider.side == Side.Left) collider.side = Side.Right;
+        }
     }
 
     public bool Move()
@@ -154,6 +165,7 @@ public class Engine : MonoBehaviour
             lastWallJump = 0;
 
             isJumping = 0;
+            animator.SetBool("isJumping", false);
 
             speed.y = 0;
             //if (hit.collider.transform.GetComponent<MovingPlatform>())
@@ -178,6 +190,8 @@ public class Engine : MonoBehaviour
 
     void Update()
     {
+
+        if (isJumping!=0) animator.SetBool("isJumping", true);
         if (type ==Type.Player)
         {
             timeSinceLastDash += Time.deltaTime;

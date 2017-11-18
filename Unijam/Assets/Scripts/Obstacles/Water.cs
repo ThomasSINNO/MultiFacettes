@@ -31,4 +31,19 @@ public class Water : Obstacle
         }
         return false;
     }
+
+    public override bool isActivable(Action.ActionType actionType)
+    {
+        if (state == State.Default)
+        {
+            switch (actionType)
+            {
+                case Action.ActionType.Freeze:
+                    return true;
+                case Action.ActionType.Move:
+                    return true;
+            }
+        }
+        return false;
+    }
 }

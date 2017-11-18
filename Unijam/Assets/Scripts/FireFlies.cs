@@ -34,14 +34,25 @@ public class FireFlies : MonoBehaviour {
         }
     }
 
-
     void TriggerActive()
     {
         Transform player = GetComponent<Transform>();
-        if (actions[activeActionIndex].Activate(player.position))
+        Obstacle obstacle = actions[activeActionIndex].Activate(player.position);
+        if (obstacle)
         {
-            DestroyCurrentFireFlies();
+            //DestroyCurrentFireFlies();
+            if (actions[activeActionIndex].type == Action.ActionType.Cut
+                || actions[activeActionIndex].type == Action.ActionType.Destroy
+                || actions[activeActionIndex].type == Action.ActionType.Freeze)
+                Debug.Log("1");
+            ThrowFireFly(obstacle);
         }
+    }
+
+    void ThrowFireFly(Obstacle obstacle)
+    {
+        Debug.Log("2");
+        actions[activeActionIndex].setObjective(obstacle);
     }
 
     public void DestroyCurrentFireFlies()

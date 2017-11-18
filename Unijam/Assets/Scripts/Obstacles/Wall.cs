@@ -33,4 +33,18 @@ public class Wall : Obstacle
         return false;
     }
 
+    public override bool isActivable(Action.ActionType actionType)
+    {
+        if (state == State.Default)
+        {
+            switch (actionType)
+            {
+                case Action.ActionType.Destroy:
+                    return true;
+                case Action.ActionType.Move:
+                    return true;
+            }
+        }
+        return false;
+    }
 }

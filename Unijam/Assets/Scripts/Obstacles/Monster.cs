@@ -34,11 +34,20 @@ public class Monster : Obstacle
                     return true;
             }       
         }
-        else if (state == State.Frozen && actionType == Action.ActionType.Destroy)
+        return false;
+    }
+
+    public override bool isActivable(Action.ActionType actionType)
+    {
+        if (state == State.Default)
         {
-            state = State.Destroyed;
-            ChargeAnimation(onKill);
-            return true;
+            switch (actionType)
+            {
+                case Action.ActionType.Destroy:
+                    return true;
+                case Action.ActionType.Freeze:
+                    return true;
+            }
         }
         return false;
     }
