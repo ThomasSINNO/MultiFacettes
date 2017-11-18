@@ -50,6 +50,7 @@ public class Player : MonoBehaviour {
             Vector3 newScale = transform.localScale;
             newScale.x *= -1;
             transform.localScale = newScale;
+            engine.InvertColliders();
         }
     }
     

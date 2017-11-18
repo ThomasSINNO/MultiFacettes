@@ -47,6 +47,15 @@ public class Engine : MonoBehaviour
         timeSinceLastDash = dashCoolDown;
     }
 
+    public void InvertColliders()
+    {
+        foreach (ColliderPoint collider in collisionPointsSides)
+        {
+            if (collider.side == Side.Right) collider.side = Side.Left;
+            else if (collider.side == Side.Left) collider.side = Side.Right;
+        }
+    }
+
     public bool Move()
     {
         if (type == Type.Player)
