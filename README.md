@@ -1,2 +1,0 @@
-# MultiFacettes
-Unijam game

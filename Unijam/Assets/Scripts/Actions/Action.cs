@@ -58,7 +58,7 @@ public class Action : MonoBehaviour {
     {
         objectif = obstacle;
         hasObjectif = true;
-        this.transform.parent = null;
+        //this.transform.parent = null;
     }
 
     public void Update()
@@ -80,7 +80,7 @@ public class Action : MonoBehaviour {
             }
             else  // The Soul touched the obstacle
             {
-                if (type == ActionType.Cut || type == ActionType.Cut)
+                if (type == ActionType.Destroy || type == ActionType.Cut)
                 {
                     objectif.GetComponent<Obstacle>().Animate();
                     Destroy(objectif.GetComponent<PolygonCollider2D>());
@@ -90,12 +90,12 @@ public class Action : MonoBehaviour {
                     objectif.Activate(ActionType.Freeze);
                 }
 
-                /*
+
                 FireFlies script = GetComponentInParent<FireFlies>();
                 script.DestroyCurrentFireFlies();
-                */
 
-                Destroy(this.gameObject);
+
+                //Destroy(this.gameObject);
                 objectif = null;
                 
             }
