@@ -6,8 +6,10 @@ public class FireFlies : MonoBehaviour {
 
     public int activeActionIndex;
     
-    [SerializeField]  private List<GameObject> Fireflies;
+    [SerializeField]  public List<GameObject> Fireflies;
     public Vector3[] FirefliesPositions;
+
+    public float speedRepositioning;
 
     private Action[] actionsTemp;
     private List<Action> actions;
@@ -40,6 +42,26 @@ public class FireFlies : MonoBehaviour {
         if (Input.GetButtonDown("Fire")){
             TriggerActive();
         }
+
+        for (int i = 0; i < Fireflies.Count - 1; i++)
+        {
+            Action action = Fireflies[i].GetComponent<Action>();
+            if (!action.hasObjectif)
+            {
+                Vector2 distance = new Vector2(FirefliesPositions[i].x - action.transform.position.x, 0);
+                if (distance.magnitude > 0.1f)
+                {
+                    float movement = speedRepositioning * Time.deltaTime;
+                    float percentX = Mathf.Abs(distance.x) / distance.magnitude;
+                    float signX = distance.x / Mathf.Abs(distance.x);
+                    this.transform.position += new Vector3(signX * movement * percentX, 0, 0);
+                }
+                else  // The Soul touched the obstacle
+                {
+                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
+                }
+            }
+        }
     }
 
     void TriggerActive()
@@ -71,6 +93,7 @@ public class FireFlies : MonoBehaviour {
         Fireflies[activeActionIndex].gameObject.SetActive(false);
         Fireflies.RemoveAt(activeActionIndex);
         actions.RemoveAt(activeActionIndex);
+
         ChangeActive();
         TurnFireflies();
     }
@@ -100,5 +123,13 @@ public class FireFlies : MonoBehaviour {
             pos++;
         }
     }
-    
+
+    public void FlipPositions()
+    {
+        for (int i = 0; i < FirefliesPositions.Length - 1; i++)
+        {
+            FirefliesPositions[i].x = -FirefliesPositions[i].x;
+        }
+    }
+   
 }

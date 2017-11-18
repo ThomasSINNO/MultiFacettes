@@ -12,7 +12,9 @@ public class Action : MonoBehaviour {
         Move,
         Freeze
     };
-    
+
+    public bool isTurning;
+    public Vector3 targetLocation;
     public Obstacle objectif;
     public bool hasObjectif;
     [SerializeField] private float speed;
@@ -25,6 +27,7 @@ public class Action : MonoBehaviour {
         hasObjectif = false;
         objectif = null;
         speed = 1f;
+        isTurning = false;
     }
 
     public Obstacle Activate(Vector3 positionPlayer)
@@ -58,16 +61,14 @@ public class Action : MonoBehaviour {
     {
         objectif = obstacle;
         hasObjectif = true;
-        //this.transform.parent = null;
     }
 
     public void Update()
     {
         if (objectif)
         {
-            LucioleAnimation lucioleScript = GetComponent<LucioleAnimation>();
-            Vector3 globalPosition = GameObject.Find(this.name).transform.position;
-            Vector3 globalObjectif = GameObject.Find(objectif.name).transform.position;
+            Vector3 globalPosition = transform.position;
+            Vector3 globalObjectif = objectif.transform.position;
             Vector2 distance = new Vector2(globalObjectif.x - globalPosition.x,
                                             globalObjectif.y - globalPosition.y);
             if (distance.magnitude > 0.1f)
