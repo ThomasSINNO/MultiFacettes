@@ -12,6 +12,11 @@ public class Monster : Obstacle
         type = Obstacle.ObstacleType.Monster;
     }
 
+    public override void Animate()
+    {
+        //ChargeAnimation(onDestroyed, "isDestroyed");
+    }
+
     // Animations
     public AnimationClip onFroze;
     public AnimationClip onKill;
@@ -24,13 +29,13 @@ public class Monster : Obstacle
             {
                 case Action.ActionType.Destroy:
                     state = State.Destroyed;
-                    ChargeAnimation(onKill);
+                    //ChargeAnimation(onKill);
                     colliderType = ColliderType.None;
                     this.gameObject.SetActive(false);
                     return true;
                 case Action.ActionType.Freeze:
                     state = State.Frozen;
-                    ChargeAnimation(onFroze);
+                    //ChargeAnimation(onFroze);
                     return true;
             }       
         }

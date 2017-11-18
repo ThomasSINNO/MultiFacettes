@@ -38,7 +38,17 @@ public class Action : MonoBehaviour {
                 {
                     return obstacle;
                 }
-                    
+            }
+        }
+        foreach (Collider2D collider in Physics2D.OverlapCircleAll(positionPlayer, actionRadius, 1<<LayerMask.NameToLayer("NoCollision")))
+        {
+            Obstacle obstacle = collider.gameObject.GetComponent<Obstacle>();
+            if (obstacle)
+            {
+                if (obstacle.isActivable(type))
+                {
+                    return obstacle;
+                }
             }
         }
         return null;
@@ -48,6 +58,7 @@ public class Action : MonoBehaviour {
     {
         objectif = obstacle;
         hasObjectif = true;
+        this.transform.parent = null;
     }
 
     public void Update()
@@ -67,13 +78,26 @@ public class Action : MonoBehaviour {
                 float signY = distance.y / Mathf.Abs(distance.y);
                 this.transform.position += new Vector3(signX * movement * percentX, signY * movement * (1 - percentX), 0);
             }
-            else
+            else  // The Soul touched the obstacle
             {
-                objectif.gameObject.SetActive(false);
+                if (type == ActionType.Cut || type == ActionType.Cut)
+                {
+                    objectif.GetComponent<Obstacle>().Animate();
+                    Destroy(objectif.GetComponent<PolygonCollider2D>());
+                }
+                else if (type == ActionType.Freeze)
+                {
+                    objectif.Activate(ActionType.Freeze);
+                }
+
+                /*
                 FireFlies script = GetComponentInParent<FireFlies>();
                 script.DestroyCurrentFireFlies();
-                //this.gameObject.SetActive(false);
+                */
+
+                Destroy(this.gameObject);
                 objectif = null;
+                
             }
         }
     }

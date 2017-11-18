@@ -11,6 +11,11 @@ public class Tree : Obstacle
         type = Obstacle.ObstacleType.Tree;
     }
 
+    public override void Animate()
+    {
+        //ChargeAnimation(onDestroyed, "isDestroyed");
+    }
+
     public new void Update()
     {
         base.Update();
@@ -32,14 +37,14 @@ public class Tree : Obstacle
             {
                 case Action.ActionType.Cut:
                     state = State.Cutted;
-                    ChargeAnimation(onCut);
+                    //ChargeAnimation(onCut);
                     colliderType = ColliderType.None;
                     this.transform.position += new Vector3(2, 0, 0);  // simulate the falling of the tree, temporary !
                     this.gameObject.SetActive(false);
                     return true;
                 case Action.ActionType.Destroy:
                     state = State.Destroyed;
-                    ChargeAnimation(onDestroyed);
+                    //ChargeAnimation(onDestroyed);
                     colliderType = ColliderType.None;
                     this.gameObject.SetActive(false);
                     return true;

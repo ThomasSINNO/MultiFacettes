@@ -13,6 +13,11 @@ public class Rop : Obstacle
     // Animation
     public AnimationClip onCut;
 
+    public override void Animate()
+    {
+        //ChargeAnimation(onDestroyed, "isDestroyed");
+    }
+
     public override bool Activate(Action.ActionType actionType)
     {
         if (state == State.Default)
@@ -20,7 +25,7 @@ public class Rop : Obstacle
             if (actionType == Action.ActionType.Cut || actionType == Action.ActionType.Shoot)
             {
                 state = State.Cutted;
-                ChargeAnimation(onCut);
+                //ChargeAnimation(onCut);
                 return true;
             }
         }
