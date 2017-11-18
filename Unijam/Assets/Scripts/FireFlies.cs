@@ -6,7 +6,7 @@ public class FireFlies : MonoBehaviour {
 
     public int activeActionIndex;
     
-    [SerializeField] GameObject[] Fireflies;
+    [SerializeField]  private List<GameObject> Fireflies;
     public Vector3[] FirefliesPositions;
 
     public Action[] actions;
@@ -14,12 +14,14 @@ public class FireFlies : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        activeActionIndex = 0;
         actions = GetComponentsInChildren<Action>();
-        FirefliesPositions = new Vector3[Fireflies.Length];
-        for (int i=0; i< Fireflies.Length; i++)
+        FirefliesPositions = new Vector3[Fireflies.Count];
+        for (int i=0; i< Fireflies.Count; i++)
         {
-            FirefliesPositions[i] = Fireflies[i].transform.localPosition;
+            FirefliesPositions[i] = Fireflies[i].transform.position - this.transform.position;
         }
+        
     }
 
     // Update is called once per frame
@@ -40,50 +42,55 @@ public class FireFlies : MonoBehaviour {
         Obstacle obstacle = actions[activeActionIndex].Activate(player.position);
         if (obstacle)
         {
-            //DestroyCurrentFireFlies();
             if (actions[activeActionIndex].type == Action.ActionType.Cut
                 || actions[activeActionIndex].type == Action.ActionType.Destroy
                 || actions[activeActionIndex].type == Action.ActionType.Freeze)
-                Debug.Log("1");
             ThrowFireFly(obstacle);
         }
     }
 
     void ThrowFireFly(Obstacle obstacle)
     {
-        Debug.Log("2");
         actions[activeActionIndex].setObjective(obstacle);
     }
 
     public void DestroyCurrentFireFlies()
     {
-        Debug.Log("firefly");
         //transform.GetChild(activeActionIndex).gameObject.SetActive(false);
-        Fireflies[activeActionIndex].SetActive(false);
+        Fireflies[activeActionIndex].gameObject.SetActive(false);
+        Fireflies.RemoveAt(activeActionIndex);
+        if (activeActionIndex < Fireflies.Count)
+        {
+            ChangeActive();
+            TurnFireflies();
+        }
     }
 
     void ChangeActive()
     {
-        if (activeActionIndex < Fireflies.Length - 1)
+        activeActionIndex++;
+        
+        if (activeActionIndex == Fireflies.Count)
         {
-            activeActionIndex += 1;
+            activeActionIndex = 0;
         }
-        else activeActionIndex = 0;
+        
     }
-
+    
     void TurnFireflies()
     {
-        for (int i = Fireflies.Length -1; i > 0; i--)
+        int pos = 0;
+        for (int i = activeActionIndex; i<Fireflies.Count; i++)
         {
-            Fireflies[i].transform.position = FirefliesPositions[i - 1] + this.transform.position;
+            Fireflies[i].transform.position = FirefliesPositions[pos] + this.transform.position;
+            pos++;
         }
-        Fireflies[0].transform.position = FirefliesPositions[4] + this.transform.position;
 
-        Vector3 vec = FirefliesPositions[4];
-        for (int i = 4; i > 0; i--)
+        for (int i = 0; i < activeActionIndex; i++)
         {
-            FirefliesPositions[i] = FirefliesPositions[i - 1];
+            Fireflies[i].transform.position = FirefliesPositions[pos] + this.transform.position;
+            pos++;
         }
-        FirefliesPositions[0] = vec;
     }
+    
 }
