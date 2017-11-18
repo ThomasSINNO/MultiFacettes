@@ -9,26 +9,31 @@ public class FireFlies : MonoBehaviour {
     [SerializeField]  private List<GameObject> Fireflies;
     public Vector3[] FirefliesPositions;
 
-    public Action[] actions;
+    private Action[] actionsTemp;
+    private List<Action> actions;
 
     // Use this for initialization
     void Start()
     {
         activeActionIndex = 0;
-        actions = GetComponentsInChildren<Action>();
         FirefliesPositions = new Vector3[Fireflies.Count];
         for (int i=0; i< Fireflies.Count; i++)
         {
             FirefliesPositions[i] = Fireflies[i].transform.position - this.transform.position;
         }
-        
+        actions = new List<Action>();
+        actionsTemp = GetComponentsInChildren<Action>();
+        for (int i = 0; i<actionsTemp.Length; i++)
+        {
+            actions.Add(actionsTemp[i]);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Switch")) {
-            Debug.Log(Fireflies.Count);
             ChangeActive();
             TurnFireflies();
         }
@@ -40,19 +45,24 @@ public class FireFlies : MonoBehaviour {
     void TriggerActive()
     {
         Transform player = GetComponent<Transform>();
+        Action test = actions[activeActionIndex];
         Obstacle obstacle = actions[activeActionIndex].Activate(player.position);
         if (obstacle)
         {
+            Debug.Log("hi again");
             if (actions[activeActionIndex].type == Action.ActionType.Cut
                 || actions[activeActionIndex].type == Action.ActionType.Destroy
                 || actions[activeActionIndex].type == Action.ActionType.Freeze)
-            ThrowFireFly(obstacle);
+            {
+                ThrowFireFly(obstacle);
+            }
+            
         }
     }
 
     void ThrowFireFly(Obstacle obstacle)
     {
-        actions[activeActionIndex].setObjective(obstacle);
+        actions[activeActionIndex].SetObjective(obstacle);
     }
 
     public void DestroyCurrentFireFlies()
@@ -60,11 +70,9 @@ public class FireFlies : MonoBehaviour {
         //transform.GetChild(activeActionIndex).gameObject.SetActive(false);
         Fireflies[activeActionIndex].gameObject.SetActive(false);
         Fireflies.RemoveAt(activeActionIndex);
-        if (activeActionIndex > 0)
-        {
-            ChangeActive();
-            TurnFireflies();
-        }
+        actions.RemoveAt(activeActionIndex);
+        ChangeActive();
+        TurnFireflies();
     }
 
     void ChangeActive()
