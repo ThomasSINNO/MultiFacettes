@@ -7,6 +7,8 @@ public class CheckPoints : MonoBehaviour {
     public bool isSet;
     Engine eng;
     GameObject pl;
+    public GameObject child;
+    public Animator anim;
 
     //   public GameObject player;
     //   GameObject pl;
@@ -29,11 +31,14 @@ public class CheckPoints : MonoBehaviour {
         eng = Object.FindObjectOfType<Engine>();
         pl = eng.gameObject;
         //this.transform.position = new Vector3(-3, -2, 0);
+        anim = child.GetComponent<Animator>();
+        
     }
 
     public void activateCheckPoint()
     {
         isSet = true;
+        anim.SetBool("isActivated", true);
         this.GetComponent<BoxCollider2D>().enabled = true;
     }
 
