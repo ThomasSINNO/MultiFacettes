@@ -44,7 +44,7 @@ public class Action : MonoBehaviour {
         return null;
     }
 
-    public void setObjective(Obstacle obstacle)
+    public void SetObjective(Obstacle obstacle)
     {
         objectif = obstacle;
         hasObjectif = true;
@@ -70,7 +70,9 @@ public class Action : MonoBehaviour {
             else
             {
                 objectif.gameObject.SetActive(false);
-                this.gameObject.SetActive(false);
+                FireFlies script = GetComponentInParent<FireFlies>();
+                script.DestroyCurrentFireFlies();
+                //this.gameObject.SetActive(false);
                 objectif = null;
             }
         }
