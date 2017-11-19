@@ -77,17 +77,15 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFilterTypeDirect: 0
-    m_PVRFilterTypeIndirect: 0
-    m_PVRFilterTypeAO: 0
+    m_PVRFiltering: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
-    m_PVRFilteringAtrousPositionSigmaIndirect: 2
-    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_PVRFilteringAtrousColorSigma: 1
+    m_PVRFilteringAtrousNormalSigma: 1
+    m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -109,8 +107,6 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
-    debug:
-      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1001 &27580613
 Prefab:
@@ -283,6 +279,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
 --- !u!4 &51470193
 Transform:
   m_ObjectHideFlags: 0
@@ -415,7 +412,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -431,7 +427,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -487,7 +482,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4390662156195420, guid: 3fc8da2e99a11ad4b88fd9b19c5ce7ed, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4390662156195420, guid: 3fc8da2e99a11ad4b88fd9b19c5ce7ed, type: 2}
       propertyPath: m_LocalScale.x
@@ -527,10 +522,11 @@ Transform:
   m_Children:
   - {fileID: 1302920096}
   - {fileID: 145511126}
+  - {fileID: 2043373849}
   - {fileID: 767164520}
   - {fileID: 2116810098}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &389118312
 Prefab:
@@ -671,12 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeActionIndex: 0
-  Fireflies:
-  - {fileID: 760427196}
-  - {fileID: 1766382735}
-  - {fileID: 871191945}
-  - {fileID: 2048578921}
-  - {fileID: 884870182}
+  Fireflies: []
   FirefliesPositions: []
 --- !u!95 &599730192
 Animator:
@@ -706,7 +697,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -722,7 +712,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -756,7 +745,7 @@ Transform:
   - {fileID: 851954808}
   - {fileID: 1774742350}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &639299761
 GameObject:
@@ -786,7 +775,7 @@ Transform:
   - {fileID: 1393632076}
   - {fileID: 1249442848}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &760427196
 GameObject:
@@ -819,9 +808,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69195a08516270448a869cc779dae7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
@@ -855,7 +844,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -871,7 +859,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -938,7 +925,7 @@ Transform:
   m_Children:
   - {fileID: 203160809}
   m_Father: {fileID: 358983348}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &767164521
 PolygonCollider2D:
@@ -1151,7 +1138,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1167,7 +1153,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1251,9 +1236,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfc8f1a97fd43c4ba40843bd9451012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
@@ -1287,7 +1272,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1303,7 +1287,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1367,9 +1350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b034f80c68cf4648a1ead91c4258064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
@@ -1403,7 +1386,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1419,7 +1401,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1452,6 +1433,24 @@ Transform:
   m_Father: {fileID: 1774742350}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &958077159 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1754041337188560, guid: c88e4b1b5bba5f946b147040293a5548,
+    type: 2}
+  m_PrefabInternal: {fileID: 1816951339}
+--- !u!114 &958077162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 958077159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30224768aa043554bbc25db5966cae9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderType: 0
+  onFroze: {fileID: 0}
 --- !u!1 &1134117871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,6 +1479,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSet: 0
+  child: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!4 &1134117873
 Transform:
   m_ObjectHideFlags: 0
@@ -1491,7 +1492,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1135042298
 GameObject:
@@ -1773,6 +1774,39 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4096409376594328, guid: ee508eda3e84b10438f529dc8b031023, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -4.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4096409376594328, guid: ee508eda3e84b10438f529dc8b031023, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -5.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 212459709252360812, guid: ee508eda3e84b10438f529dc8b031023,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 47ab8aaf5364cbb4e8fe8e07cfd374ce,
+        type: 3}
+    - target: {fileID: 212459709252360812, guid: ee508eda3e84b10438f529dc8b031023,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212459709252360812, guid: ee508eda3e84b10438f529dc8b031023,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212459709252360812, guid: ee508eda3e84b10438f529dc8b031023,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300582851344188, guid: ee508eda3e84b10438f529dc8b031023, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ee508eda3e84b10438f529dc8b031023, type: 2}
   m_IsPrefabParent: 0
@@ -1807,9 +1841,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4313d1b0c28c4ab44a85b5ebba146ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
@@ -1843,7 +1877,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1859,7 +1892,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1971,9 +2003,10 @@ Prefab:
       objectReference: {fileID: 9100000, guid: a401d1c468422a34bbe137b9ab193a28, type: 2}
     - target: {fileID: 4888373783311344, guid: c88e4b1b5bba5f946b147040293a5548, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114082235866247708, guid: c88e4b1b5bba5f946b147040293a5548, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c88e4b1b5bba5f946b147040293a5548, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2002080894
@@ -2020,6 +2053,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   side: 2
+--- !u!4 &2043373849 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4385540424904806, guid: df865fa9f1bb67a47b27d44c89fd9388,
+    type: 2}
+  m_PrefabInternal: {fileID: 2130045776}
 --- !u!1 &2048578921
 GameObject:
   m_ObjectHideFlags: 0
@@ -2051,9 +2089,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18916c6b9d02dc34c9baed0dbe842a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
@@ -2087,7 +2125,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2103,7 +2140,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2178,7 +2214,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 358983348}
     m_Modifications:
     - target: {fileID: 4385540424904806, guid: df865fa9f1bb67a47b27d44c89fd9388, type: 2}
       propertyPath: m_LocalPosition.x
@@ -2210,7 +2246,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4385540424904806, guid: df865fa9f1bb67a47b27d44c89fd9388, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df865fa9f1bb67a47b27d44c89fd9388, type: 2}
