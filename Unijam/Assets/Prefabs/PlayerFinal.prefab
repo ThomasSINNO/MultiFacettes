@@ -447,7 +447,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1221712006445052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.93, y: -0.42, z: 0}
+  m_LocalPosition: {x: 0.08, y: 0.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4757036774472686}
@@ -587,8 +587,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
@@ -600,7 +601,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1221712006445052}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5813801df2d8b5646a9ebfb2c7af3a5e, type: 3}
   m_Name: 
@@ -608,6 +609,7 @@ MonoBehaviour:
   Fireflies: []
   speed: 0
   maxDist: 1
+  coeffRandom: 0
 --- !u!114 &114032636602710334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -644,8 +646,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
@@ -663,9 +666,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeActionIndex: 0
-  Fireflies: []
+  superJump: 0
+  Fireflies:
+  - {fileID: 1431862069976348}
+  - {fileID: 1122768330698168}
+  - {fileID: 1970069442082990}
+  - {fileID: 1924778599262832}
+  - {fileID: 1680313316517366}
   FirefliesPositions: []
-  speedRepositioning: 0
+  speedRepositioning: 5
 --- !u!114 &114374356666448536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -716,8 +725,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
@@ -771,8 +781,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
@@ -812,8 +823,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
+  objectifPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   hasObjectif: 0
   speed: 2
   actionRadius: 2
