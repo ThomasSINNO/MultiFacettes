@@ -11,7 +11,11 @@ AnimatorController:
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
+<<<<<<< HEAD
     m_StateMachine: {fileID: 1107696128081735474}
+=======
+    m_StateMachine: {fileID: 1107858987294410690}
+>>>>>>> be9175ff35fa976905edd3fc2a331c945c893bb3
     m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
@@ -21,7 +25,11 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+<<<<<<< HEAD
 --- !u!1102 &1102175686226369462
+=======
+--- !u!1102 &1102941961701421504
+>>>>>>> be9175ff35fa976905edd3fc2a331c945c893bb3
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
@@ -44,7 +52,11 @@ AnimatorState:
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
+<<<<<<< HEAD
 --- !u!1107 &1107696128081735474
+=======
+--- !u!1107 &1107858987294410690
+>>>>>>> be9175ff35fa976905edd3fc2a331c945c893bb3
 AnimatorStateMachine:
   serializedVersion: 5
   m_ObjectHideFlags: 1
@@ -53,7 +65,11 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
+<<<<<<< HEAD
     m_State: {fileID: 1102175686226369462}
+=======
+    m_State: {fileID: 1102941961701421504}
+>>>>>>> be9175ff35fa976905edd3fc2a331c945c893bb3
     m_Position: {x: 200, y: 0, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
@@ -64,4 +80,8 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+<<<<<<< HEAD
   m_DefaultState: {fileID: 1102175686226369462}
+=======
+  m_DefaultState: {fileID: 1102941961701421504}
+>>>>>>> be9175ff35fa976905edd3fc2a331c945c893bb3
