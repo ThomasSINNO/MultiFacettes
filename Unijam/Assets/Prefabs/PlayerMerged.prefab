@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 114450985473459994}
   - component: {fileID: 114451089835029718}
   - component: {fileID: 114456704354656550}
-  - component: {fileID: 114855641418244042}
+  - component: {fileID: 114374951116685502}
   m_Layer: 0
   m_Name: PlayerMerged
   m_TagString: Untagged
@@ -568,8 +568,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b034f80c68cf4648a1ead91c4258064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
   hasObjectif: 0
   speed: 2
@@ -588,6 +586,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   side: 2
+--- !u!114 &114374951116685502
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652716546028078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9011a610609a5574b8e0d8677233bf74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Fireflies:
+  - {fileID: 1020698080106202}
+  - {fileID: 1592708584141738}
+  - {fileID: 1965705384930724}
+  - {fileID: 1096273507999708}
+  - {fileID: 1365627703330106}
+  speed: 0.5
+  maxDist: 1
 --- !u!114 &114450985473459994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -607,6 +624,7 @@ MonoBehaviour:
   - {fileID: 1096273507999708}
   - {fileID: 1365627703330106}
   FirefliesPositions: []
+  actions: []
 --- !u!114 &114451089835029718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -642,7 +660,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMoving: 0
   maxSpeed: 5
-  checkPointManager: {fileID: 0}
 --- !u!114 &114581042374662154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -654,8 +671,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18916c6b9d02dc34c9baed0dbe842a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
   hasObjectif: 0
   speed: 2
@@ -709,33 +724,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfc8f1a97fd43c4ba40843bd9451012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
   hasObjectif: 0
   speed: 2
   actionRadius: 2
   actionRadiusSoul: 0.1
   type: 0
---- !u!114 &114855641418244042
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1652716546028078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5813801df2d8b5646a9ebfb2c7af3a5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Fireflies:
-  - {fileID: 1020698080106202}
-  - {fileID: 1592708584141738}
-  - {fileID: 1965705384930724}
-  - {fileID: 1096273507999708}
-  - {fileID: 1365627703330106}
-  speed: 0.5
-  maxDist: 1
 --- !u!114 &114939658795231338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -747,8 +741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4313d1b0c28c4ab44a85b5ebba146ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
   hasObjectif: 0
   speed: 2
@@ -778,8 +770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69195a08516270448a869cc779dae7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTurning: 0
-  targetLocation: {x: 0, y: 0, z: 0}
   objectif: {fileID: 0}
   hasObjectif: 0
   speed: 2
@@ -1048,5 +1038,5 @@ SpriteRenderer:
   m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0

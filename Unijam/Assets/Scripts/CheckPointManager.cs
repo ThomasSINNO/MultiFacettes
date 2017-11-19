@@ -1,64 +1,71 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CheckPointManager : PersistentSingleton<CheckPointManager> {
 
     // Use this for initialization
 
-    public CheckPoint[] checkPoints;
-    private CheckPoint lastCheckpoint;
-
-    private Vector3 respawnPoint;
-    public GameObject player;
-    private Animator animator;
-    private int justDied;
-    [SerializeField] private CameraFollowPlayer camera;
-
-	void Start ()
-    {
-        justDied = 0;
-        checkPoints = GetComponentsInChildren<CheckPoint>();
-        foreach (CheckPoint cp in checkPoints)
+    public CheckPoints[] checkPoints;
+    public bool[] testindexes;
+    public CheckPoints lastchkpnt;
+    public CheckPoints firstchkpnt;
+	void Start () {
+        checkPoints = GetComponentsInChildren<CheckPoints>();
+        testindexes = new bool[checkPoints.Length];
+        for(int i = 0; i < checkPoints.Length; i++)
         {
-            cp.player = player;
+            
+            testindexes[i] = true;
         }
-        camera.player = player;
+        //foreach(CheckPoints g in checkPoints)
+        //{
+        //    if (g.isLast == true)
+        //    {
+        //        firstchkpnt = g;
+        //        lastchkpnt = g;
+        //    }
+        //}
+
+	}
+
+    public void Sacrifice(GameObject g)
+    {
+        g.transform.position = lastchkpnt.transform.position;
     }
 
-    public void Sacrifice()
+    public void Death(GameObject g)
     {
-        player.GetComponent<Animator>().SetBool("isDying", true);
-        Application.LoadLevel(Application.loadedLevel);
-        player.transform.position = checkPoints[1].transform.position;
-        justDied = 2;
-        respawnPoint = lastCheckpoint.transform.position;
-    }
+        g.transform.position = firstchkpnt.transform.position;
+        for (int i = 0; i < checkPoints.Length; i++)
+        {
+            checkPoints[i].shutdownCheckPoint();
+            testindexes[i] = true;
+        }
 
-    public void Death()
-    {
-        player.GetComponent<Animator>().SetBool("isDying", true);
-        Application.LoadLevel(Application.loadedLevel);
-        player.transform.position = checkPoints[1].transform.position;
-        justDied = 2;
-        respawnPoint = checkPoints[0].transform.position;
     }
 
     // Update is called once per frame
     void Update () {
-        player = GameObject.Find("PlayerFinal");
-        if (justDied!=0)
+
+        for (int i = 0; i < checkPoints.Length; i++)
         {
-            player.transform.position = checkPoints[1].transform.position;
-            justDied -=1;
-        }
-        foreach (CheckPoint cp in checkPoints)
-        {
-            if (cp.isSet)
+            if (testindexes[i])
             {
-                lastCheckpoint = cp;
+                if (checkPoints[i].isSet)
+                {
+                    lastchkpnt = checkPoints[i];
+                    if(!firstchkpnt) firstchkpnt = checkPoints[i];
+                    testindexes[i] = false;
+                }
             }
-        }  
+        }
+        //foreach (CheckPoints g in checkPoints)
+        //{
+        //    if (g.GetComponent<CheckPoints>().isLast == true)
+        //    {
+        //        lastchkpnt = g;
+        //    }
+        //}
     }
 }
