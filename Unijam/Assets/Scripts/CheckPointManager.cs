@@ -5,67 +5,60 @@ using UnityEngine;
 public class CheckPointManager : PersistentSingleton<CheckPointManager> {
 
     // Use this for initialization
+    
+    public CheckPoint[] checkPoints;
+    private CheckPoint lastCheckpoint;
+    public GameObject player;
+    [SerializeField] private CameraFollowPlayer camera;
 
-    public CheckPoints[] checkPoints;
-    public bool[] testindexes;
-    public CheckPoints lastchkpnt;
-    public CheckPoints firstchkpnt;
-	void Start () {
-        checkPoints = GetComponentsInChildren<CheckPoints>();
-        testindexes = new bool[checkPoints.Length];
-        for(int i = 0; i < checkPoints.Length; i++)
-        {
-            
-            testindexes[i] = true;
-        }
-        //foreach(CheckPoints g in checkPoints)
-        //{
-        //    if (g.isLast == true)
-        //    {
-        //        firstchkpnt = g;
-        //        lastchkpnt = g;
-        //    }
-        //}
-
-	}
-
-    public void Sacrifice(GameObject g)
+	void Start ()
     {
-        g.transform.position = lastchkpnt.transform.position;
+        checkPoints = GetComponentsInChildren<CheckPoint>();
+        foreach (CheckPoint cp in checkPoints)
+        {
+            cp.player = player;
+        }
+        camera.player = player;
     }
 
-    public void Death(GameObject g)
+    public void Sacrifice()
     {
-        g.transform.position = firstchkpnt.transform.position;
-        for (int i = 0; i < checkPoints.Length; i++)
+        GameObject newPlayer = Instantiate(player, lastCheckpoint.transform.position + new Vector3(0,1), Quaternion.identity);
+        camera.player = newPlayer;
+        foreach (CheckPoint cp in checkPoints)
         {
-            checkPoints[i].shutdownCheckPoint();
-            testindexes[i] = true;
+            cp.player = newPlayer;
         }
+        Destroy(player);
+        this.player = newPlayer;
+    }
 
+    public void Death()
+    {
+        GameObject newPlayer = Instantiate(player, checkPoints[0].transform.position + new Vector3(0, 1), Quaternion.identity);
+        camera.player = newPlayer;
+        foreach (CheckPoint cp in checkPoints)
+        {
+            cp.player = newPlayer;
+        }
+        Destroy(player);
+        this.player = newPlayer;
+
+        foreach (CheckPoint cp in checkPoints)
+        {
+            cp.shutdownCheckPoint();
+        }
     }
 
     // Update is called once per frame
     void Update () {
 
-        for (int i = 0; i < checkPoints.Length; i++)
+        foreach (CheckPoint cp in checkPoints)
         {
-            if (testindexes[i])
+            if (cp.isSet)
             {
-                if (checkPoints[i].isSet)
-                {
-                    lastchkpnt = checkPoints[i];
-                    if(!firstchkpnt) firstchkpnt = checkPoints[i];
-                    testindexes[i] = false;
-                }
+                lastCheckpoint = cp;
             }
-        }
-        //foreach (CheckPoints g in checkPoints)
-        //{
-        //    if (g.GetComponent<CheckPoints>().isLast == true)
-        //    {
-        //        lastchkpnt = g;
-        //    }
-        //}
+        }  
     }
 }
