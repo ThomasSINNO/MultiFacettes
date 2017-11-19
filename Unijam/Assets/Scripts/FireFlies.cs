@@ -64,7 +64,10 @@ public class FireFlies : MonoBehaviour {
                     float movement = speedRepositioning * Time.deltaTime;
                     float percentX = Mathf.Abs(distance.x) / distance.magnitude;
                     float signX = distance.x / Mathf.Abs(distance.x);
-                    float signY = distance.y / Mathf.Abs(distance.y);
+                    float signY;
+                    if (distance.y != 0) signY = distance.y / Mathf.Abs(distance.y);
+                    else signY = 0;
+ 
                     action.transform.position += new Vector3(signX * movement * percentX, signY * movement * (1 - percentX), 0);
                 }
                 else  // The Soul touched the obstacle
