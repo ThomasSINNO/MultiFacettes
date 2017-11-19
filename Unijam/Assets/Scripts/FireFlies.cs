@@ -48,14 +48,24 @@ public class FireFlies : MonoBehaviour {
             Action action = Fireflies[i].GetComponent<Action>();
             if (!action.hasObjectif)
             {
-                float distance = FirefliesPositions[i].x + transform.position.x - action.transform.position.x;
-                Debug.Log(distance);
-                if (Mathf.Abs(distance) > 0.1f)
+                Vector2 distance = new Vector2 (FirefliesPositions[i].x + transform.position.x - action.transform.position.x,
+                                    FirefliesPositions[i].y + transform.position.y - action.transform.position.y);
+
+                
+                //if (distance.magnitude > 0.1f)
+                //{
+                //    canTurn = false;
+                //    float movement = speedRepositioning * Time.deltaTime;
+                //    float signX = distance / Mathf.Abs(distance);
+                //    action.transform.position += new Vector3(signX * movement, 0, 0);
+                //}
+                if (distance.magnitude > 0.1f)
                 {
-                    canTurn = false;
                     float movement = speedRepositioning * Time.deltaTime;
-                    float signX = distance / Mathf.Abs(distance);
-                    action.transform.position += new Vector3(signX * movement, 0, 0);
+                    float percentX = Mathf.Abs(distance.x) / distance.magnitude;
+                    float signX = distance.x / Mathf.Abs(distance.x);
+                    float signY = distance.y / Mathf.Abs(distance.y);
+                    action.transform.position += new Vector3(signX * movement * percentX, signY * movement * (1 - percentX), 0);
                 }
                 else  // The Soul touched the obstacle
                 {
@@ -87,7 +97,7 @@ public class FireFlies : MonoBehaviour {
         {
             TriggerActive();
         }
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && superJump)
         {
             superJump = false;
             GetComponent<Engine>().powerJump /= 2;
@@ -152,38 +162,48 @@ public class FireFlies : MonoBehaviour {
     
     public void DestroyCurrentFireFlies()
     {
-        //transform.GetChild(activeActionIndex).gameObject.SetActive(false);
-        Fireflies[activeActionIndex].gameObject.SetActive(false);
-        Fireflies.RemoveAt(activeActionIndex);
-        actions.RemoveAt(activeActionIndex);
-
         ChangeActive();
         TurnFireflies();
+        //transform.GetChild(activeActionIndex).gameObject.SetActive(false);
+        Fireflies[Fireflies.Count-1].gameObject.SetActive(false);
+        Fireflies.RemoveAt(Fireflies.Count - 1);
+        actions.RemoveAt(Fireflies.Count - 1);
+
+        
     }
 
     void ChangeActive()
     {
-        activeActionIndex++;
-        if (activeActionIndex >= Fireflies.Count)
+        activeActionIndex--;
+        if (activeActionIndex < 0)
         {
-            activeActionIndex = 0;
+            activeActionIndex = Fireflies.Count -1;
         }
         
     }
     
     void TurnFireflies()
     {
-        int pos = 0;
-        for (int i = activeActionIndex; i<Fireflies.Count; i++)
-        {
-            Fireflies[i].transform.position = FirefliesPositions[pos] + this.transform.position;
-            pos++;
-        }
+        //int pos = 0;
+        //for (int i = activeActionIndex; i<Fireflies.Count; i++)
+        //{
+        //    Fireflies[i].transform.position = FirefliesPositions[pos] + this.transform.position;
+        //    pos++;
+        //}
 
-        for (int i = 0; i < activeActionIndex; i++)
+        //for (int i = 0; i < activeActionIndex; i++)
+        //{
+        //    Fireflies[i].transform.position = FirefliesPositions[pos] + this.transform.position;
+        //    pos++;
+        //}
+
+        Vector3 temp = FirefliesPositions[Fireflies.Count - 1];
+        for (int i = 0; i < Fireflies.Count; i++)
         {
-            Fireflies[i].transform.position = FirefliesPositions[pos] + this.transform.position;
-            pos++;
+            
+            if (i == 0) FirefliesPositions[Fireflies.Count - 1] = FirefliesPositions[0];
+            else if (i == Fireflies.Count - 1) FirefliesPositions[Fireflies.Count - 2] = temp;
+            else FirefliesPositions[i - 1] = FirefliesPositions[i];
         }
     }
 
