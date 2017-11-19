@@ -11,12 +11,15 @@ public class FireFlies : MonoBehaviour {
 
     public float speedRepositioning;
 
+    bool canTurn;
+
     private Action[] actionsTemp;
     private List<Action> actions;
 
     // Use this for initialization
     void Start()
     {
+        canTurn = true;
         activeActionIndex = 0;
         FirefliesPositions = new Vector3[Fireflies.Count];
         for (int i=0; i< Fireflies.Count; i++)
@@ -35,32 +38,41 @@ public class FireFlies : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Switch")) {
-            ChangeActive();
-            TurnFireflies();
-        }
-        if (Input.GetButtonDown("Fire")){
-            TriggerActive();
-        }
+        canTurn = true;
 
-        for (int i = 0; i < Fireflies.Count - 1; i++)
+        for (int i = 0; i < Fireflies.Count; i++)
         {
             Action action = Fireflies[i].GetComponent<Action>();
             if (!action.hasObjectif)
             {
-                Vector2 distance = new Vector2(FirefliesPositions[i].x - action.transform.position.x, 0);
-                if (distance.magnitude > 0.1f)
+                float distance = FirefliesPositions[i].x + transform.position.x - action.transform.position.x;
+                Debug.Log(distance);
+                if (Mathf.Abs(distance) > 0.1f)
                 {
+                    canTurn = false;
                     float movement = speedRepositioning * Time.deltaTime;
-                    float percentX = Mathf.Abs(distance.x) / distance.magnitude;
-                    float signX = distance.x / Mathf.Abs(distance.x);
-                    this.transform.position += new Vector3(signX * movement * percentX, 0, 0);
+                    float signX = distance / Mathf.Abs(distance);
+                    action.transform.position += new Vector3(signX * movement, 0, 0);
                 }
                 else  // The Soul touched the obstacle
                 {
-                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y);
+                    if (action.isTurning)
+                    {
+                        action.transform.localScale = new Vector3(transform.localScale.x / Mathf.Abs(transform.localScale.x) * action.transform.localScale.x, action.transform.localScale.y);
+                        action.isTurning = false;
+                    }
                 }
             }
+        }
+
+        if (Input.GetButtonDown("Switch") && canTurn)
+        {
+            ChangeActive();
+            TurnFireflies();
+        }
+        if (Input.GetButtonDown("Fire"))
+        {
+            TriggerActive();
         }
     }
 
@@ -126,7 +138,7 @@ public class FireFlies : MonoBehaviour {
 
     public void FlipPositions()
     {
-        for (int i = 0; i < FirefliesPositions.Length - 1; i++)
+        for (int i = 0; i < FirefliesPositions.Length; i++)
         {
             FirefliesPositions[i].x = -FirefliesPositions[i].x;
         }

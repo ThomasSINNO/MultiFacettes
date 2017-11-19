@@ -65,10 +65,11 @@ public class Player : MonoBehaviour {
 
             List<GameObject> fireFlies = GetComponent<FireFlies>().Fireflies;
             Vector3[] fireFliesPositions = GetComponent<FireFlies>().FirefliesPositions;
-            for (int i = 0; i<fireFlies.Count -1; i++)
+            for (int i = 0; i<fireFlies.Count; i++)
             {
                 fireFlies[i].transform.localPosition = new Vector3(-fireFlies[i].transform.localPosition.x, fireFlies[i].transform.localPosition.y);
                 fireFlies[i].transform.localScale = new Vector3(-fireFlies[i].transform.localScale.x, fireFlies[i].transform.localScale.y);
+                fireFlies[i].GetComponent<Action>().isTurning = true;
             }
             engine.InvertColliders();
         }
