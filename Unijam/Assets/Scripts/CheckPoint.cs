@@ -27,6 +27,7 @@ public class CheckPoint : MonoBehaviour {
     }
 
     void Update () {
+        player = GameObject.Find("PlayerFinal");
         if (player.transform.position.x > transform.position.x)
         {
             activateCheckPoint();    

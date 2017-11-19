@@ -11,7 +11,7 @@ public class DeathManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        player = checkPointManager.player;
+        player = GameObject.Find("PlayerFinal");
         if (Mathf.Abs(player.transform.position.x - transform.position.x) < GetComponent<Collider2D>().bounds.size.x/2)
         {
             if (Mathf.Abs(player.transform.position.y - transform.position.y) < GetComponent<Collider2D>().bounds.size.y / 2)
