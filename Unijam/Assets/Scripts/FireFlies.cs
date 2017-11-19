@@ -58,7 +58,17 @@ public class FireFlies : MonoBehaviour {
                 {
                     if (action.isTurning)
                     {
-                        action.transform.localScale = new Vector3(transform.localScale.x / Mathf.Abs(transform.localScale.x) * action.transform.localScale.x, action.transform.localScale.y);
+                        if (transform.lossyScale.x < 0 && action.transform.localScale.x * transform.localScale.x > 0)
+                        {
+                            Debug.Log("plop");
+                            action.transform.localScale = new Vector3(- action.transform.localScale.x, action.transform.localScale.y);
+                        }
+                        if (transform.lossyScale.x > 0 && action.transform.localScale.x * transform.localScale.x < 0)
+                        {
+                            Debug.Log("plop");
+                            action.transform.localScale = new Vector3(-action.transform.localScale.x, action.transform.localScale.y);
+                        }
+
                         action.isTurning = false;
                     }
                 }
