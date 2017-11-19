@@ -5,6 +5,8 @@ using UnityEngine;
 public class FireFlies : MonoBehaviour {
 
     public int activeActionIndex;
+
+    public bool superJump;
     
     [SerializeField]  public List<GameObject> Fireflies;
     public Vector3[] FirefliesPositions;
@@ -19,6 +21,7 @@ public class FireFlies : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        superJump = false;
         canTurn = true;
         activeActionIndex = 0;
         FirefliesPositions = new Vector3[Fireflies.Count];
@@ -84,6 +87,18 @@ public class FireFlies : MonoBehaviour {
         {
             TriggerActive();
         }
+        if (Input.GetButtonDown("Jump"))
+        {
+            superJump = false;
+            GetComponent<Engine>().powerJump /= 2;
+        }
+    }
+
+    // Move fly touched the player, he can now jump really high for 2 seconds
+    public void ActivateMove()
+    {
+        superJump = true;
+        GetComponent<Engine>().powerJump *= 2;
     }
 
     void TriggerActive()
