@@ -8,6 +8,10 @@ public class CheckPoints : MonoBehaviour {
     Engine eng;
     GameObject pl;
 
+    [SerializeField]
+    private GameObject child;
+    private Animator anim;
+
     //   public GameObject player;
     //   GameObject pl;
 
@@ -26,6 +30,7 @@ public class CheckPoints : MonoBehaviour {
 
     private void Start()
     {
+        anim = child.GetComponent<Animator>();
         eng = Object.FindObjectOfType<Engine>();
         pl = eng.gameObject;
         //this.transform.position = new Vector3(-3, -2, 0);
@@ -35,6 +40,7 @@ public class CheckPoints : MonoBehaviour {
     {
         isSet = true;
         this.GetComponent<BoxCollider2D>().enabled = true;
+        anim.SetBool("isActivated", true);
     }
 
     public void shutdownCheckPoint()
