@@ -73,12 +73,10 @@ public class FireFlies : MonoBehaviour {
                     {
                         if (transform.lossyScale.x < 0 && action.transform.localScale.x * transform.localScale.x > 0)
                         {
-                            Debug.Log("plop");
                             action.transform.localScale = new Vector3(- action.transform.localScale.x, action.transform.localScale.y);
                         }
                         if (transform.lossyScale.x > 0 && action.transform.localScale.x * transform.localScale.x < 0)
                         {
-                            Debug.Log("plop");
                             action.transform.localScale = new Vector3(-action.transform.localScale.x, action.transform.localScale.y);
                         }
 
@@ -129,7 +127,6 @@ public class FireFlies : MonoBehaviour {
         Obstacle obstacle = actions[activeActionIndex].Activate(player.position);
         if (obstacle)
         {
-            Debug.Log("hi again");
             if (actions[activeActionIndex].type == Action.ActionType.Cut
                 || actions[activeActionIndex].type == Action.ActionType.Destroy
                 || actions[activeActionIndex].type == Action.ActionType.Freeze)
@@ -157,7 +154,9 @@ public class FireFlies : MonoBehaviour {
         shootCopy.GetComponent<Action>().SetDirection(direction);
         shootCopy.transform.position += new Vector3(this.transform.position.x, this.transform.position.y, 0);
         shootCopy.transform.localScale = new Vector3(this.transform.localScale.x, 1, 1);
-        DestroyCurrentFireFlies();
+        Fireflies[activeActionIndex].gameObject.SetActive(false);
+        Fireflies.RemoveAt(activeActionIndex);
+        actions.RemoveAt(activeActionIndex);
     }
     
     public void DestroyCurrentFireFlies()
