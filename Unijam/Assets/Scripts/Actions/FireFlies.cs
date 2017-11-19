@@ -6,9 +6,13 @@ public class FireFlies : MonoBehaviour {
 
     public int activeActionIndex;
     
-    [SerializeField]  private List<GameObject> Fireflies;  // ignore the debug error
+    [SerializeField]  public List<GameObject> Fireflies;
     public Vector3[] FirefliesPositions;
     private bool superJump;
+
+    public float speedRepositioning;
+
+    bool canTurn;
 
     private Action[] actionsTemp;
     private List<Action> actions;
@@ -17,6 +21,7 @@ public class FireFlies : MonoBehaviour {
     private void Start()
     {
         superJump = false;
+        canTurn = true;
         activeActionIndex = 0;
         FirefliesPositions = new Vector3[Fireflies.Count];
         for (int i=0; i< Fireflies.Count; i++)
@@ -47,11 +52,40 @@ public class FireFlies : MonoBehaviour {
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetButtonDown("Switch")) {
+        canTurn = true;
+
+        for (int i = 0; i < Fireflies.Count; i++)
+        {
+            Action action = Fireflies[i].GetComponent<Action>();
+            if (!action.hasObjectif)
+            {
+                float distance = FirefliesPositions[i].x + transform.position.x - action.transform.position.x;
+                Debug.Log(distance);
+                if (Mathf.Abs(distance) > 0.1f)
+                {
+                    canTurn = false;
+                    float movement = speedRepositioning * Time.deltaTime;
+                    float signX = distance / Mathf.Abs(distance);
+                    action.transform.position += new Vector3(signX * movement, 0, 0);
+                }
+                else  // The Soul touched the obstacle
+                {
+                    if (action.isTurning)
+                    {
+                        action.transform.localScale = new Vector3(transform.localScale.x / Mathf.Abs(transform.localScale.x) * action.transform.localScale.x, action.transform.localScale.y);
+                        action.isTurning = false;
+                    }
+                }
+            }
+        }
+
+        if (Input.GetButtonDown("Switch") && canTurn)
+        {
             ChangeActive();
             TurnFireflies();
         }
-        if (Input.GetButtonDown("Fire")){
+        if (Input.GetButtonDown("Fire"))
+        {
             TriggerActive();
         }
         // only one super jump alawed
@@ -116,15 +150,11 @@ public class FireFlies : MonoBehaviour {
 
     public void DestroyCurrentFireFlies()
     {
-        DestroyFireFlies(activeActionIndex);
-    }
-
-    public void DestroyFireFlies(int index)
-    {
         //transform.GetChild(activeActionIndex).gameObject.SetActive(false);
-        Fireflies[index].gameObject.SetActive(false);
-        Fireflies.RemoveAt(index);
-        actions.RemoveAt(index);
+        Fireflies[activeActionIndex].gameObject.SetActive(false);
+        Fireflies.RemoveAt(activeActionIndex);
+        actions.RemoveAt(activeActionIndex);
+
         ChangeActive();
         TurnFireflies();
     }
@@ -160,5 +190,13 @@ public class FireFlies : MonoBehaviour {
             pos++;
         }
     }
-    
+
+    public void FlipPositions()
+    {
+        for (int i = 0; i < FirefliesPositions.Length; i++)
+        {
+            FirefliesPositions[i].x = -FirefliesPositions[i].x;
+        }
+    }
+   
 }

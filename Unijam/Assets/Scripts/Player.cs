@@ -33,8 +33,6 @@ public class Player : MonoBehaviour {
         {
             checkPointManager.Sacrifice(this.gameObject);
         }
-
-
     }
 
     void FixedUpdate()
@@ -60,17 +58,6 @@ public class Player : MonoBehaviour {
             Vector3 newScale = transform.localScale;
             newScale.x *= -1;
             transform.localScale = newScale;
-
-            GetComponent<FireFlies>().FlipPositions();
-
-            List<GameObject> fireFlies = GetComponent<FireFlies>().Fireflies;
-            Vector3[] fireFliesPositions = GetComponent<FireFlies>().FirefliesPositions;
-            for (int i = 0; i<fireFlies.Count; i++)
-            {
-                fireFlies[i].transform.localPosition = new Vector3(-fireFlies[i].transform.localPosition.x, fireFlies[i].transform.localPosition.y);
-                fireFlies[i].transform.localScale = new Vector3(-fireFlies[i].transform.localScale.x, fireFlies[i].transform.localScale.y);
-                fireFlies[i].GetComponent<Action>().isTurning = true;
-            }
             engine.InvertColliders();
         }
     }
