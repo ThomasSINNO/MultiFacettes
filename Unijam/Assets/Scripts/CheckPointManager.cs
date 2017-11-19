@@ -5,10 +5,11 @@ using UnityEngine;
 public class CheckPointManager : PersistentSingleton<CheckPointManager> {
 
     // Use this for initialization
-    
+
     public CheckPoint[] checkPoints;
     private CheckPoint lastCheckpoint;
     public GameObject player;
+    private Animator animator;
     [SerializeField] private CameraFollowPlayer camera;
 
 	void Start ()
@@ -23,7 +24,8 @@ public class CheckPointManager : PersistentSingleton<CheckPointManager> {
 
     public void Sacrifice()
     {
-        GameObject newPlayer = Instantiate(player, lastCheckpoint.transform.position + new Vector3(0,1), Quaternion.identity);
+        player.GetComponent<Animator>().SetBool("isDying", true);
+        GameObject newPlayer = Instantiate(player, lastCheckpoint.transform.position + new Vector3(1,1), Quaternion.identity);
         camera.player = newPlayer;
         foreach (CheckPoint cp in checkPoints)
         {
@@ -35,7 +37,8 @@ public class CheckPointManager : PersistentSingleton<CheckPointManager> {
 
     public void Death()
     {
-        GameObject newPlayer = Instantiate(player, checkPoints[0].transform.position + new Vector3(0, 1), Quaternion.identity);
+        player.GetComponent<Animator>().SetBool("isDying", true);
+        GameObject newPlayer = Instantiate(player, checkPoints[0].transform.position + new Vector3(1, 1), Quaternion.identity);
         camera.player = newPlayer;
         foreach (CheckPoint cp in checkPoints)
         {
@@ -46,7 +49,7 @@ public class CheckPointManager : PersistentSingleton<CheckPointManager> {
 
         foreach (CheckPoint cp in checkPoints)
         {
-            cp.shutdownCheckPoint();
+            if (cp!=checkPoints[0]) cp.shutdownCheckPoint();
         }
     }
 

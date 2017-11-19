@@ -34,10 +34,8 @@ public class Player : MonoBehaviour
         animator.SetBool("isMoving", this.gameObject.GetComponent<Player>().isMoving);
         if (this.transform.position.y < -10)
         {
-            checkPointManager.Sacrifice(this.gameObject);
+            checkPointManager.Sacrifice();
         }
-
-
     }
 
     void FixedUpdate()
