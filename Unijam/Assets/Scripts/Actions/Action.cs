@@ -12,7 +12,8 @@ public class Action : MonoBehaviour {
         Move,
         Freeze
     };
-    
+
+    public bool isTurning;
     // The objectif can be an obstacle or a position (i.e the player position for move)
     public Obstacle objectif;
     public Vector3 objectifPosition;
@@ -27,6 +28,7 @@ public class Action : MonoBehaviour {
 
     private void Start()
     {
+        isTurning = false;
         direction = 0;
         hasObjectif = false;
         objectif = null;
