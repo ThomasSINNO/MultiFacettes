@@ -12,6 +12,8 @@ public class Tree : Obstacle
     }
 
     public override void Animate() {
+        GetComponent<BoxCollider2D>().size = new Vector2(5, 1);
+        GetComponent<BoxCollider2D>().offset += new Vector2(2, -2);
         ChargeAnimation(onDestroyed, "isCut");
     }
 
