@@ -11,9 +11,8 @@ public class Tree : Obstacle
         type = Obstacle.ObstacleType.Tree;
     }
 
-    public override void Animate()
-    {
-        //ChargeAnimation(onDestroyed, "isDestroyed");
+    public override void Animate() {
+        ChargeAnimation(onDestroyed, "isCut");
     }
 
     public new void Update()
