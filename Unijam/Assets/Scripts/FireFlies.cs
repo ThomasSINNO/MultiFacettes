@@ -64,6 +64,7 @@ public class FireFlies : MonoBehaviour {
 
     public void TriggerActive()
     {
+        
         if (actions[activeActionIndex].type == Action.ActionType.Move)
         {
             ThrowFireFly(this.transform.position);
@@ -111,6 +112,7 @@ public class FireFlies : MonoBehaviour {
         GameObject shootCopy = Instantiate(Fireflies[activeActionIndex]);
         shootCopy.GetComponent<Action>().SetDirection(direction);
         shootCopy.transform.position += new Vector3(this.transform.position.x, this.transform.position.y, 0);
+        shootCopy.transform.localScale = new Vector3(this.transform.localScale.x, 1, 1);
         DestroyCurrentFireFlies();
     }
 

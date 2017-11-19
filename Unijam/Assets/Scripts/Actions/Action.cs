@@ -139,6 +139,11 @@ public class Action : MonoBehaviour {
             {
                 objectif.Activate(ActionType.Freeze);
             }
+            else if (type == ActionType.Shoot)
+            {
+                objectif.Activate(ActionType.Shoot);
+                Destroy(this.gameObject);
+            }
 
             FireFlies script = GetComponentInParent<FireFlies>();
             script.DestroyCurrentFireFlies();
@@ -164,6 +169,7 @@ public class Action : MonoBehaviour {
         // does something only if the shoot is activated (direction != 0)
         if (type == ActionType.Shoot && direction != 0)
         {
+           
             this.transform.position += new Vector3(direction * speed * Time.deltaTime, 0, 0);
             foreach (Collider2D collider in Physics2D.OverlapCircleAll(this.transform.position, actionRadius))
             {
