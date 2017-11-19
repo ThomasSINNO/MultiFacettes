@@ -6,17 +6,20 @@ public class FireFlies : MonoBehaviour {
 
     public int activeActionIndex;
     
-    [SerializeField]  private List<GameObject> Fireflies;  // ignore the debug error
+    [SerializeField]  public List<GameObject> Fireflies;
     public Vector3[] FirefliesPositions;
-    private bool superJump;
+
+    public float speedRepositioning;
+
+    bool canTurn;
 
     private Action[] actionsTemp;
     private List<Action> actions;
 
     // Use this for initialization
-    private void Start()
+    void Start()
     {
-        superJump = false;
+        canTurn = true;
         activeActionIndex = 0;
         FirefliesPositions = new Vector3[Fireflies.Count];
         for (int i=0; i< Fireflies.Count; i++)
@@ -29,41 +32,63 @@ public class FireFlies : MonoBehaviour {
         {
             actions.Add(actionsTemp[i]);
         }
-    }
 
-    // return true is a fly is in direction of an objectif, player, etc...
-    private bool IsFliesMoving()
-    {
-        foreach(Action action in actions)
-        {
-            if (action.hasObjectif)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     // Update is called once per frame
-    private void Update()
+    void Update()
     {
-        if (Input.GetButtonDown("Switch")) {
+        canTurn = true;
+
+        for (int i = 0; i < Fireflies.Count; i++)
+        {
+            Action action = Fireflies[i].GetComponent<Action>();
+            if (!action.hasObjectif)
+            {
+                float distance = FirefliesPositions[i].x + transform.position.x - action.transform.position.x;
+                Debug.Log(distance);
+                if (Mathf.Abs(distance) > 0.1f)
+                {
+                    canTurn = false;
+                    float movement = speedRepositioning * Time.deltaTime;
+                    float signX = distance / Mathf.Abs(distance);
+                    action.transform.position += new Vector3(signX * movement, 0, 0);
+                }
+                else  // The Soul touched the obstacle
+                {
+                    if (action.isTurning)
+                    {
+                        if (transform.lossyScale.x < 0 && action.transform.localScale.x * transform.localScale.x > 0)
+                        {
+                            Debug.Log("plop");
+                            action.transform.localScale = new Vector3(- action.transform.localScale.x, action.transform.localScale.y);
+                        }
+                        if (transform.lossyScale.x > 0 && action.transform.localScale.x * transform.localScale.x < 0)
+                        {
+                            Debug.Log("plop");
+                            action.transform.localScale = new Vector3(-action.transform.localScale.x, action.transform.localScale.y);
+                        }
+
+                        action.isTurning = false;
+                    }
+                }
+            }
+        }
+
+        if (Input.GetButtonDown("Switch") && canTurn)
+        {
             ChangeActive();
             TurnFireflies();
         }
-        if (Input.GetButtonDown("Fire")){
-            TriggerActive();
-        }
-        // only one super jump alawed
-        if (Input.GetButtonDown("Jump") && superJump)
+        if (Input.GetButtonDown("Fire"))
         {
-            superJump = false;
-            GetComponent<Engine>().powerJump /= 2;
+            TriggerActive();
         }
     }
 
-    public void TriggerActive()
+    void TriggerActive()
     {
+        
         if (actions[activeActionIndex].type == Action.ActionType.Move)
         {
             ThrowFireFly(this.transform.position);
@@ -73,33 +98,28 @@ public class FireFlies : MonoBehaviour {
             int sign = (int)this.transform.localScale.x;
             ThrowFireFly(sign);
         }
-
+        
         Transform player = GetComponent<Transform>();
         Action test = actions[activeActionIndex];
         Obstacle obstacle = actions[activeActionIndex].Activate(player.position);
         if (obstacle)
         {
+            Debug.Log("hi again");
             if (actions[activeActionIndex].type == Action.ActionType.Cut
                 || actions[activeActionIndex].type == Action.ActionType.Destroy
                 || actions[activeActionIndex].type == Action.ActionType.Freeze)
             {
                 ThrowFireFly(obstacle);
             }
+            
         }
     }
 
-    // Move fly touched the player, he can now jump really high for 2 seconds
-    public void ActivateMove()
-    {
-        superJump = true;
-        GetComponent<Engine>().powerJump*=2;
-    }
-
-    public void ThrowFireFly(Obstacle obstacle)
+    void ThrowFireFly(Obstacle obstacle)
     {
         actions[activeActionIndex].SetObjective(obstacle);
     }
-
+    
     public void ThrowFireFly(Vector3 position)
     {
         actions[activeActionIndex].SetObjective(position);
@@ -111,25 +131,22 @@ public class FireFlies : MonoBehaviour {
         GameObject shootCopy = Instantiate(Fireflies[activeActionIndex]);
         shootCopy.GetComponent<Action>().SetDirection(direction);
         shootCopy.transform.position += new Vector3(this.transform.position.x, this.transform.position.y, 0);
+        shootCopy.transform.localScale = new Vector3(this.transform.localScale.x, 1, 1);
         DestroyCurrentFireFlies();
     }
-
+    
     public void DestroyCurrentFireFlies()
     {
-        DestroyFireFlies(activeActionIndex);
-    }
-
-    public void DestroyFireFlies(int index)
-    {
         //transform.GetChild(activeActionIndex).gameObject.SetActive(false);
-        Fireflies[index].gameObject.SetActive(false);
-        Fireflies.RemoveAt(index);
-        actions.RemoveAt(index);
+        Fireflies[activeActionIndex].gameObject.SetActive(false);
+        Fireflies.RemoveAt(activeActionIndex);
+        actions.RemoveAt(activeActionIndex);
+
         ChangeActive();
         TurnFireflies();
     }
 
-    public void ChangeActive()
+    void ChangeActive()
     {
         activeActionIndex++;
         if (activeActionIndex >= Fireflies.Count)
@@ -138,15 +155,9 @@ public class FireFlies : MonoBehaviour {
         }
         
     }
-
-    public void TurnFireflies()
+    
+    void TurnFireflies()
     {
-        // can't change if a fire fly is activate
-        if (IsFliesMoving())
-        {
-            return;
-        }
-
         int pos = 0;
         for (int i = activeActionIndex; i<Fireflies.Count; i++)
         {
@@ -160,5 +171,13 @@ public class FireFlies : MonoBehaviour {
             pos++;
         }
     }
-    
+
+    public void FlipPositions()
+    {
+        for (int i = 0; i < FirefliesPositions.Length; i++)
+        {
+            FirefliesPositions[i].x = -FirefliesPositions[i].x;
+        }
+    }
+   
 }
